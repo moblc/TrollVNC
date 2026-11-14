@@ -107,7 +107,11 @@ jobs:
         uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: "16.2"
-
+      - name: Install iOS 18.2 Runtime
+        run: |
+          xcodebuild -version
+          xcodebuild -downloadPlatform iOS -buildVersion 18.2
+          xcrun simctl list runtimes
       - name: Generate Managed.plist (managed build)
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.is_managed == true }}
         env:
