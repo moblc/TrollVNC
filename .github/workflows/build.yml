@@ -102,16 +102,16 @@ jobs:
           ./bin/install-sdk iPhoneOS14.5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Setup Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: "16.2"
-      - name: Install iOS 18.2 Runtime
+            xcode-version: "16.4"
+        
+      - name: Check Xcode Environment
         run: |
-          xcodebuild -version
-          xcodebuild -downloadPlatform iOS -buildVersion 18.2
-          xcrun simctl list runtimes
+            xcodebuild -version
+            xcodebuild -showsdks
+            xcrun --sdk iphoneos --show-sdk-version
       - name: Generate Managed.plist (managed build)
         if: ${{ github.event_name == 'workflow_dispatch' && inputs.is_managed == true }}
         env:
